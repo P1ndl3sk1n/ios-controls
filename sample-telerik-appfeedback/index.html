@@ -1,42 +1,207 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Hello World!</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-        </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">
-            app.initialize();
-        </script>
-    </body>
+	<head>
+		<title>Feedback Sample Apps</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="LOLcat">
+
+		<link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="touch-icons/apple-touch-icon-114x114.png">
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="touch-icons/apple-touch-icon-72x72.png">
+		<link rel="apple-touch-icon-precomposed" sizes="57x57" href="touch-icons/apple-touch-icon-57x57.png">
+		<link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+		<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,300,700,800" rel="stylesheet" type="text/css">
+		<link href="styles/main.css" rel="stylesheet" type="text/css">
+
+		<script src="cordova.js"></script>
+		<script src="kendo/js/jquery.min.js"></script>
+		<script src="kendo/js/kendo.mobile.min.js"></script>
+		<script src="scripts/shake.js"></script>
+		<script src="scripts/sketch.js"></script>
+		<script src="scripts/moment.min.js"></script>
+		<script src="scripts/detailsViewModel.js"></script>
+		<script src="scripts/viewModel.js"></script>
+		<script src="scripts/app.js"></script>
+	</head>
+	<body>
+		<div id="Notification"><i class="icon-remove"></i><span></span></div>
+		<div id="Overlay" style="display: none;"></div>
+		<div id="Loading" style="display: none;"></div>
+		<div id="home-view" data-role="view" data-title="LOL Cats" data-model="app.viewModel">
+			<div id="Content">
+				<div class="content-body">
+					<div id="images" style="padding: 0 20px;"></div>
+				</div>
+			</div>
+		</div>
+
+		<div id="Navigation" data-role="drawer" data-views="['home-view',  'all-feedback-view']">
+			<ul class="top">
+				<li>
+					<a href="#home-view">
+						<i class="icon-home"></i> Home
+					</a>
+				</li>
+				<li>
+					<a href="#all-feedback-view">
+						<i class="icon-list"></i> All Feedback
+					</a>
+				</li>
+			</ul>
+		</div>
+
+		<div id="send-feedback-view" 
+			 data-role="view" 
+			 data-layout="send-feedback-layout" 
+			 data-model="app.viewModel"
+			 data-title="Send Feedback">
+			<div class="send-feedback-form">
+				<textarea data-bind="value: feedbackText" placeholder="Tell us what you think"></textarea>
+				<div class="user-name">
+					<label for="FeedbackFrom">From:</label>
+					<input id="FeedbackFrom" type="text" placeholder="Your name" data-bind="value: UID">
+				</div>
+
+				<div class="image-editor">
+					<p>
+						Screenshot (<span data-bind="text: imageSize"></span>):
+					</p>
+					<div class="image-actions">
+						<a data-role="button" class="draw" data-click="app.viewModel.goToEditScreenshotView">
+							<i class="icon-pencil"></i> Edit
+						</a>
+					</div>
+					<div class="image-wrapper">
+						<img id="screenshotImg" data-bind="{attr: {src: imageData}}" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="all-feedback-view" 
+			 data-show="app.viewModel.allFeedbackViewShown" 
+			 data-role="view" 
+			 data-title="All feedback" 
+			 data-model="app.viewModel" 
+			 data-layout="main-layout">
+			<ul id="allFeedbackListView">
+
+			</ul>
+		</div>
+
+		<div id="feedback-details-view" 
+			 data-role="view" 
+			 data-layout="feedback-details-layout" 
+			 data-title="Feedback"
+			 data-show="app.viewModel.details.detailsViewShown"
+			 data-model="app.viewModel.details">
+			<div class="feedback-screenshot" data-bind="visible: details.imageUrl">
+				<div class="screenshot-wrapper">
+					<img data-bind="{attr: {src: details.imageUrl}}">
+					<div class="zoom-button in">
+						<i class="icon-zoom-in"></i>
+					</div>
+					<div class="zoom-button out">
+						<i class="icon-zoom-out"></i>
+					</div>
+				</div>
+			</div>
+			<div class="feedback-description">
+				<p class="author" data-bind="text: author"></p>
+				<p class="text" data-bind="text: currentThread.Text"></p>
+				<p class="date" data-bind="text: createdAt"></p>
+			</div>
+			<div class="replies-listing">
+				<h2>Comments</h2>
+				<ul id="feedbackCommentsListView" data-role="listView" data-bind="source: feedbackComments" data-template="feedback-details-template">
+				</ul>
+			</div>
+			<div class="send-feedback-form">
+				<textarea placeholder="Your reply" data-bind="value: feedbackText"></textarea>
+				<input type="text" placeholder="Your name" data-bind="value: UID">
+
+				<a data-role="button" data-bind="click: postReply">
+					Add Reply
+				</a>
+			</div>
+		</div>
+
+		<div id="edit-screenshot-view" data-role="view" data-layout="edit-screenshot-layout" data-title="Draw"
+			data-show="app.viewModel.editScreenshotViewShown">
+			<canvas id="canvas" width="90%" height="50%"></canvas>                
+		</div>
+
+		<!--Layout-->
+		<div data-role="layout" data-id="main-layout">
+			<div data-role="header">
+				<header class="bar-title" data-role="navbar">
+					<a class="button navigation-toggle" href="#Navigation" data-role="button" data-rel="drawer" data-align="left">
+						<i class="icon-reorder"></i>
+					</a>
+					<span data-role="view-title"></span>
+					<a class="send-button"
+					   data-align="right" 
+					   data-role="button"
+					   data-click="app.viewModel.goToSendFeedbackView">
+						<i class="icon-bullhorn"></i>
+					</a>
+				</header>
+			</div>
+		</div>
+
+		<div data-role="layout" data-id="send-feedback-layout">
+			<div data-role="header">
+				<div data-role="navbar">
+					<a data-role="backbutton" data-align="left">Cancel</a>
+					<span data-role="view-title"></span>
+					<a data-role="button" data-align="right" data-click="app.viewModel.submitFeedback">Send</a>
+				</div>
+			</div>
+		</div>
+
+		<div data-role="layout" data-id="feedback-details-layout">
+			<div data-role="header">
+				<div data-role="navbar">
+					<a data-role="backbutton" data-align="left"></a>
+					<span data-role="view-title"></span>
+				</div>
+			</div>
+		</div>
+
+		<div data-role="layout" data-id="edit-screenshot-layout">
+			<div data-role="header">
+				<div data-role="navbar">
+					<a data-role="backbutton" data-align="left">Cancel</a>
+					<span data-role="view-title"></span>
+					<a data-role="button" data-align="right" data-click="app.viewModel.editScreenshot">Done</a>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/x-kendo-template" id="all-feedback-template">
+			<a>
+				<div class="feedback-item">
+					<div class="date"># var createdAt = kendo.toString(new Date(data.CreatedAt), 'MMMM dd, yyyy h:mm tt'); #
+						${createdAt} </div>
+					<div class="author">${data.Author || data.Uid || 'Anonymous'}</div>
+					<div class="text">${Text || ''}</div>
+					<div class="replies">${CommentsCount -1} replies</div>
+				</div>
+			</a>
+		</script>
+
+		<script type="text/x-kendo-template" id="feedback-details-template">
+			<li>
+				<div class="text">${data.Text || ''}</div>
+				# var createdAt = kendo.toString(new Date(data.CreatedAt), 'MMMM dd, yyyy h:mm tt'); #
+				<div class="meta">
+					<span class="date">#= moment(data.ModifiedAt).fromNow() #</span>
+					<span class="author">${data.Author || data.Uid || 'Anonymous'} </span>
+				</div>
+			</li>
+		</script>
+	</body>
 </html>
