@@ -16,7 +16,7 @@
                     if(closeHandler) {
                         closeHandler();
                     }
-                })
+                });
             })
             .find('span')
             .html((error.message || error).toString().replace('Bad Request: ', ''));
@@ -70,10 +70,6 @@
 
 		this.allFeedbackViewShown = function(ev) {
 			var self = app.viewModel;
-			if (self.get('allFeedback')) {
-				return;
-			}
-
 			app.utils.showBusyIndicator(true);
 			var options = {
 				page: 1,
@@ -86,7 +82,6 @@
 					}
 				}
 				if (data.length === 0) {
-					self.set('allFeedback', undefined);
                     app.utils.showBusyIndicator(false);
                     self.errorCallback('There is no feedback for this project.', function() {
                         app.application.navigate('#/');
@@ -95,13 +90,16 @@
 				}
 				
 				var dataSource = kendo.data.DataSource.create({
-																  data: data, 
+																  data: data,
 																  group: 'StateLowerCase'
 															  });
 				var template = kendo.template($('#all-feedback-template').html());
 				
 				self.set('allFeedback', dataSource);
-				$('#allFeedbackListView').kendoMobileListView({
+				var $listView = $('#allFeedbackListView');
+				var kendoListView = $listView.data("kendoMobileListView");
+				if (!kendoListView) {
+					$listView.kendoMobileListView({
 																  dataSource: dataSource,
 																  template: template,
 																  click: function(e) {
@@ -109,6 +107,9 @@
 																	  app.application.navigate('#feedback-details-view');
 																  }
 															  });
+				} else {
+					kendoListView.setDataSource(dataSource);
+				}
 				app.utils.showBusyIndicator(false);
 			}, self.errorCallback);
 		};
@@ -117,8 +118,8 @@
 			var self = app.viewModel;
 			var $screenshot = $('#screenshotImg');
 			self.set('screenshotSize', {
-						 height: $screenshot[0].naturalHeight, 
-						 width: $screenshot[0].naturalWidth 
+						 height: $screenshot[0].naturalHeight,
+						 width: $screenshot[0].naturalWidth
 					 });
 			app.application.navigate('#edit-screenshot-view');
 		};
@@ -168,7 +169,7 @@
 		};
 
 		this.details = app.detailsViewModel;
-	};
+	}
 
 	app.viewModel = new kendo.observable(new ViewModel());
 })(window);
