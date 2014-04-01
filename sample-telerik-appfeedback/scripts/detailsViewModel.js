@@ -16,12 +16,12 @@
 				self.set('UID', self.get('currentThread.Uid'));
 
                 var $screenshot = $('.feedback-screenshot');
-                $screenshot.off('click')
+                $screenshot.off('click');
                 $screenshot.removeClass('zoomed');
 				$screenshot.on('click', function() {
 					$screenshot.toggleClass('zoomed');
 				});
-			}, parent.errorCallback);  
+			}, parent.errorCallback);
 		};
         
 		this.detailsViewShown = function(ev) {
@@ -45,7 +45,7 @@
 		this.author = function() {
 			var self = app.viewModel.get('details');
 			var currentThread = self.get('currentThread');
-			if (currentThread) {				
+			if (currentThread) {
 				return currentThread.Author || currentThread.Uid;
 			}
 
@@ -65,7 +65,7 @@
 		this.postReply = function(ev) {
 			var self = app.viewModel.get('details');
 			var replyObj = {
-				text: self.feedbackText, 
+				text: self.feedbackText,
 				uid: self.UID
 			};
 
