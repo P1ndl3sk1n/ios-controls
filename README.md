@@ -1,7 +1,7 @@
 sample-telerik-appfeedback
 ==========================
 
-This application is a basic example of using feedback services provided by Telerik AppFeedback.
+This application is part of a private beta release. If you want to get access, please contact [Telerik Support](mailto:support@telerik.com).
 
 ### Requirements
 - Registration in [Telerik Platform](http://www.telerik.com/platform)
