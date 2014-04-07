@@ -9,6 +9,12 @@
 		this.allFeedback = undefined;
 		this.screenshotSize = {};
 		
+        this.clearUidAndText = function() {
+            var self = app.viewModel;
+            self.set('UID', '');
+            self.set('feedbackText', '');
+        }
+        
 		this.errorCallback = function(error, closeHandler) {
             $('#Notification').addClass('error').fadeIn('2000', function() {
                 $(this).find('i').on('click', function() {
@@ -49,7 +55,6 @@
 									  uid: self.UID
 								  }, function(data) {
 									  app.utils.showBusyIndicator(false);
-									  app.application.navigate('#/');
 									  $('#Notification').find('span').html('Feedback sent. Thank you!');
                                       $('#Notification').addClass('ok').fadeIn('2000').delay('4000').fadeOut('2000');
 								  }, self.errorCallback);
@@ -114,16 +119,6 @@
 			}, self.errorCallback);
 		};
 
-		this.goToEditScreenshotView = function(ev) {
-			var self = app.viewModel;
-			var $screenshot = $('#screenshotImg');
-			self.set('screenshotSize', {
-						 height: $screenshot[0].naturalHeight,
-						 width: $screenshot[0].naturalWidth
-					 });
-			app.application.navigate('#edit-screenshot-view');
-		};
-		
 		this.editScreenshotViewShown = function(ev) {
 			var self = app.viewModel;
 			var $canvas = $('#canvas');
@@ -148,25 +143,80 @@
 			img.src = self.imageData;
 		};
 
-		this.editScreenshot = function(ev) {
-			var self = app.viewModel;
-			var $canvas = $('#canvas');
-			
-			// overlay the screenshot with the drawing from the user
-			var screenshot = new Image();
-			screenshot.onload = function() {
-				var newCanvas = $('<canvas></canvas>')[0];
-				var newContext = newCanvas.getContext("2d");
-				newCanvas.width = $canvas[0].width;
-				newCanvas.height = $canvas[0].height;
-				
-				newContext.drawImage(screenshot, 0, 0, newCanvas.width, newCanvas.height);
-				newContext.drawImage($canvas[0], 0, 0);
-				self.set('imageData', newCanvas.toDataURL('data:image/png'));
-				app.application.navigate('#:back');
+        this.drawImageOnCanvas = function($canvas){
+            var self = app.viewModel;
+            var canvas = $canvas[0];
+            var context = canvas.getContext('2d');
+
+            var img = new Image();
+            img.onload = function() {
+                var desiredWidth = Math.round($('html').width() - 2 * $canvas.offset().left);
+                
+                canvas.width = desiredWidth;
+                canvas.height = Math.round(img.naturalHeight * (desiredWidth / img.naturalWidth));
+                
+                context.webkitImageSmoothingEnabled = false;
+                context.mozImageSmoothingEnabled = false;
+                context.imageSmoothingEnabled = false; /// future
+                
+            	context.drawImage(img, 0, 0, canvas.width, canvas.height);
             };
-			screenshot.src = self.imageData;
-		};
+            
+			img.src = self.imageData;
+    	};
+
+        this.onScreenshotTap = function(ev) {
+            var $screenshotCanvas = $('#screenshotCanvas');
+            var screenX = ev.touch.x.screen;
+            var screenY = ev.touch.y.screen;
+			
+            var canvasXOffset = $screenshotCanvas.offset().left;
+            var canvasYOffset = $screenshotCanvas.offset().top;
+            
+            var canvasX = screenX - canvasXOffset;
+            var canvasY = screenY - canvasYOffset;
+            
+            var context = $screenshotCanvas[0].getContext('2d');
+            context.strokeStyle = 'red';
+            context.fillStyle = 'red';
+            context.beginPath();
+            context.arc(canvasX, canvasY, 13, 0, Math.PI * 2);
+            context.fill();
+            
+            context.beginPath();
+            context.arc(canvasX, canvasY, 6, 0, Math.PI * 2);
+            context.fillStyle = 'white';
+            context.fill();
+            $('#modal-view').data('kendoMobileModalView').open();
+        };
+
+        this.cancelFeedback = function(ev){
+            var self = app.viewModel;
+            self.drawImageOnCanvas($('#screenshotCanvas'));
+            self.clearUidAndText();
+            $('#modal-view').data('kendoMobileModalView').close();
+        };
+        
+        this.onSendFeedbackViewShown = function(ev) {
+            var self = app.viewModel;
+            var $canvas = $('#screenshotCanvas'); 
+            
+            self.drawImageOnCanvas($canvas);
+        };
+        
+        this.sendFeedback = function(ev) {
+            var self = app.viewModel;
+            var $canvas = $('#screenshotCanvas');
+            var originalImageData = self.get('imageData');
+            
+            self.set('imageData', $canvas[0].toDataURL('data:image/png'));
+            self.submitFeedback();
+            
+            self.set('imageData', originalImageData);
+            self.drawImageOnCanvas($canvas);
+            self.clearUidAndText();
+            $('#modal-view').data('kendoMobileModalView').close();
+        };
 
 		this.details = app.detailsViewModel;
 	}

@@ -57,26 +57,16 @@
 			 data-role="view" 
 			 data-layout="send-feedback-layout" 
 			 data-model="app.viewModel"
-			 data-title="Send Feedback">
+			 data-title="Send Feedback"
+             data-show="app.viewModel.onSendFeedbackViewShown">
 			<div class="send-feedback-form">
-				<textarea data-bind="value: feedbackText" placeholder="Tell us what you think"></textarea>
-				<div class="user-name">
-					<label for="FeedbackFrom">From:</label>
-					<input id="FeedbackFrom" type="text" placeholder="Your name" data-bind="value: UID">
-				</div>
-
+                <h1>Tap to leave feedback</h1>
 				<div class="image-editor">
 					<p>
 						Screenshot (<span data-bind="text: imageSize"></span>):
 					</p>
-					<div class="image-actions">
-						<a data-role="button" class="draw" data-click="app.viewModel.goToEditScreenshotView">
-							<i class="icon-pencil"></i> Edit
-						</a>
-					</div>
-					<div class="image-wrapper">
-						<img id="screenshotImg" data-bind="{attr: {src: imageData}}" />
-					</div>
+
+                    <canvas id="screenshotCanvas" data-role="touch" data-tap="app.viewModel.onScreenshotTap"></canvas>
 				</div>
 			</div>
 		</div>
@@ -134,6 +124,23 @@
 			<canvas id="canvas" width="90%" height="50%"></canvas>                
 		</div>
 
+        <div id="modal-view" data-role="modalview" data-model="app.viewModel" style="width: 300px; height: 300px">
+            <div data-role="header">
+                <div data-role="navbar">
+                	<a data-role="button" data-align="right" data-click="app.viewModel.cancelFeedback">Cancel</a>
+                </div>
+            </div>
+            <div class="send-feedback-form">
+				<textarea data-bind="value: feedbackText" placeholder="Tell us what you think"></textarea>
+				<div class="user-name">
+					<label for="FeedbackFrom">From:</label>
+					<input id="FeedbackFrom" type="text" placeholder="Your name" data-bind="value: UID">
+				</div>
+
+                <a data-click="app.viewModel.sendFeedback" data-role="button">Send</a>
+            </div>
+        </div>
+        
 		<!--Layout-->
 		<div data-role="layout" data-id="main-layout">
 			<div data-role="header">
@@ -157,7 +164,6 @@
 				<div data-role="navbar">
 					<a data-role="backbutton" data-align="left">Cancel</a>
 					<span data-role="view-title"></span>
-					<a data-role="button" data-align="right" data-click="app.viewModel.submitFeedback">Send</a>
 				</div>
 			</div>
 		</div>
