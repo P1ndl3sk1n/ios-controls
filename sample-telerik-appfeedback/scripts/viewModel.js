@@ -8,12 +8,12 @@
 		this.systemInfo = {};
 		this.allFeedback = undefined;
 		this.screenshotSize = {};
+        this.points = [];
 		
-        this.clearUidAndText = function() {
+        this.clearFeedbackText = function() {
             var self = app.viewModel;
-            self.set('UID', '');
             self.set('feedbackText', '');
-        }
+        };
         
 		this.errorCallback = function(error, closeHandler) {
             $('#Notification').addClass('error').fadeIn('2000', function() {
@@ -175,25 +175,35 @@
             
             var canvasX = screenX - canvasXOffset;
             var canvasY = screenY - canvasYOffset;
+
+            app.viewModel.lastPoint = {
+                x: canvasX,
+                y: canvasY
+            };
             
-            var context = $screenshotCanvas[0].getContext('2d');
+            app.viewModel.drawPointOnCanvas($screenshotCanvas, app.viewModel.lastPoint);
+            $('#modal-view').data('kendoMobileModalView').open();
+        };
+        
+        this.drawPointOnCanvas = function (canvas, point) {
+        	var context = canvas[0].getContext('2d');
+
             context.strokeStyle = 'red';
             context.fillStyle = 'red';
             context.beginPath();
-            context.arc(canvasX, canvasY, 13, 0, Math.PI * 2);
+            context.arc(point.x, point.y, 13, 0, Math.PI * 2);
             context.fill();
             
             context.beginPath();
-            context.arc(canvasX, canvasY, 6, 0, Math.PI * 2);
+            context.arc(point.x, point.y, 6, 0, Math.PI * 2);
             context.fillStyle = 'white';
             context.fill();
-            $('#modal-view').data('kendoMobileModalView').open();
         };
 
         this.cancelFeedback = function(ev){
             var self = app.viewModel;
             self.drawImageOnCanvas($('#screenshotCanvas'));
-            self.clearUidAndText();
+            self.clearFeedbackText();
             $('#modal-view').data('kendoMobileModalView').close();
         };
         
@@ -202,9 +212,10 @@
             var $canvas = $('#screenshotCanvas'); 
             
             self.drawImageOnCanvas($canvas);
+            self.points = [];
         };
         
-        this.sendFeedback = function(ev) {
+        this.saveFeedback = function(ev) {
             var self = app.viewModel;
             var $canvas = $('#screenshotCanvas');
             var originalImageData = self.get('imageData');
@@ -214,8 +225,28 @@
             
             self.set('imageData', originalImageData);
             self.drawImageOnCanvas($canvas);
-            self.clearUidAndText();
+
+            self.points.push({
+                x: self.lastPoint.x,
+                y: self.lastPoint.y,
+                text: self.feedbackText
+            });
+            
+            self.clearFeedbackText();
             $('#modal-view').data('kendoMobileModalView').close();
+        };
+        
+        this.sendFeedbackItems = function () {
+            $('#send-all-view').data('kendoMobileModalView').open();
+        };
+        
+        this.doneSendFeedbackItems = function () {
+        	$('#send-all-view').data('kendoMobileModalView').close();
+            app.application.navigate('#/');
+        };
+        
+        this.cancelSendFeedbackItems = function () {
+            $('#send-all-view').data('kendoMobileModalView').close();
         };
 
 		this.details = app.detailsViewModel;

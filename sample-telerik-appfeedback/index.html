@@ -125,19 +125,24 @@
 		</div>
 
         <div id="modal-view" data-role="modalview" data-model="app.viewModel" style="width: 300px; height: 300px">
-            <div data-role="header">
-                <div data-role="navbar">
-                	<a data-role="button" data-align="right" data-click="app.viewModel.cancelFeedback">Cancel</a>
-                </div>
-            </div>
             <div class="send-feedback-form">
 				<textarea data-bind="value: feedbackText" placeholder="Tell us what you think"></textarea>
+                <div style="maring-top: 10px;">
+                    <a data-click="app.viewModel.saveFeedback" data-role="button">Save</a>
+                    <a data-role="button" data-align="right" data-click="app.viewModel.cancelFeedback">Cancel</a>
+            	</div>
+            </div>
+        </div>
+        
+		<div id="send-all-view" data-role="modalview" data-model="app.viewModel" style="width: 300px; height: 100px">
+            <div class="send-feedback-form">
 				<div class="user-name">
-					<label for="FeedbackFrom">From:</label>
 					<input id="FeedbackFrom" type="text" placeholder="Your name" data-bind="value: UID">
 				</div>
-
-                <a data-click="app.viewModel.sendFeedback" data-role="button">Send</a>
+                <div style="margin-top: 10px;">
+                    <a data-role="button" data-click="app.viewModel.doneSendFeedbackItems">Done</a>
+                	<a data-role="button" data-click="app.viewModel.cancelSendFeedbackItems">Cancel</a>                	
+                </div>
             </div>
         </div>
         
@@ -164,6 +169,7 @@
 				<div data-role="navbar">
 					<a data-role="backbutton" data-align="left">Cancel</a>
 					<span data-role="view-title"></span>
+                    <a class="send-button" data-align="right" data-role="button" data-click="app.viewModel.sendFeedbackItems">Send</a>
 				</div>
 			</div>
 		</div>
