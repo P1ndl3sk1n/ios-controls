@@ -23,6 +23,7 @@
 		<script src="scripts/sketch.js"></script>
 		<script src="scripts/moment.min.js"></script>
 		<script src="scripts/detailsViewModel.js"></script>
+		<script src="scripts/allFeedbackViewModel.js"></script>
 		<script src="scripts/viewModel.js"></script>
 		<script src="scripts/app.js"></script>
 	</head>
@@ -72,10 +73,10 @@
 		</div>
 
 		<div id="all-feedback-view" 
-			 data-show="app.viewModel.allFeedbackViewShown" 
+			 data-show="app.allFeedbackViewModel.allFeedbackViewShown" 
 			 data-role="view" 
 			 data-title="All feedback" 
-			 data-model="app.viewModel" 
+			 data-model="app.allFeedbackViewModel" 
 			 data-layout="main-layout">
 			<ul id="allFeedbackListView">
 
@@ -117,11 +118,6 @@
 					Add Reply
 				</a>
 			</div>
-		</div>
-
-		<div id="edit-screenshot-view" data-role="view" data-layout="edit-screenshot-layout" data-title="Draw"
-			data-show="app.viewModel.editScreenshotViewShown">
-			<canvas id="canvas" width="90%" height="50%"></canvas>                
 		</div>
 
         <div id="modal-view" data-role="modalview" data-model="app.viewModel" style="width: 300px; height: 300px">
