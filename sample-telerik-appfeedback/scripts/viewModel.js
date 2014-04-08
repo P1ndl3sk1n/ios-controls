@@ -13,21 +13,7 @@
         this.clearFeedbackText = function() {
             var self = app.viewModel;
             self.set('feedbackText', '');
-        };
-        
-		this.errorCallback = function(error, closeHandler) {
-            $('#Notification').addClass('error').fadeIn('2000', function() {
-                $(this).find('i').on('click', function() {
-                  $('#Notification').removeClass('error').hide();
-                    if(closeHandler) {
-                        closeHandler();
-                    }
-                });
-            })
-            .find('span')
-            .html((error.message || error).toString().replace('Bad Request: ', ''));
-			app.utils.showBusyIndicator(false);
-		};
+        }
 
 		this.imageSize = function() {
 			var length = app.viewModel.get('imageData.length'),
@@ -57,7 +43,7 @@
 									  app.utils.showBusyIndicator(false);
 									  $('#Notification').find('span').html('Feedback sent. Thank you!');
                                       $('#Notification').addClass('ok').fadeIn('2000').delay('4000').fadeOut('2000');
-								  }, self.errorCallback);
+								  }, app.utils.errorCallback);
 		};
 
 		this.goToSendFeedbackView = function(ev) {
@@ -69,8 +55,8 @@
 					self.set('systemInfo', systemInfo);
 					self.set('imageData', 'data:image/png;base64,' + base64Image);
 					app.application.navigate('#send-feedback-view');
-				}, self.errorCallback);
-			}, self.errorCallback);
+				}, app.utils.errorCallback);
+			}, app.utils.errorCallback);
 		};
 
 		this.allFeedbackViewShown = function(ev) {
@@ -88,7 +74,7 @@
 				}
 				if (data.length === 0) {
                     app.utils.showBusyIndicator(false);
-                    self.errorCallback('There is no feedback for this project.', function() {
+                    app.utils.errorCallback('There is no feedback for this project.', function() {
                         app.application.navigate('#/');
                     });
 					return;
@@ -116,7 +102,7 @@
 					kendoListView.setDataSource(dataSource);
 				}
 				app.utils.showBusyIndicator(false);
-			}, self.errorCallback);
+			}, app.utils.errorCallback);
 		};
 
 		this.editScreenshotViewShown = function(ev) {

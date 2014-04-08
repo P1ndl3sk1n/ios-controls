@@ -11,7 +11,21 @@
 			else {
 				overlay.hide();
 			}
-		}
+		},
+        
+        errorCallback: function(error, closeHandler) {
+            $('#Notification').addClass('error').fadeIn('2000', function() {
+                $(this).find('i').on('click', function() {
+                  $('#Notification').removeClass('error').hide();
+                    if(closeHandler) {
+                        closeHandler();
+                    }
+                });
+            })
+            .find('span')
+            .html((error.message || error).toString().replace('Bad Request: ', ''));
+			app.utils.showBusyIndicator(false);
+        }
 	}
 	
 	document.addEventListener('deviceready', function () {
