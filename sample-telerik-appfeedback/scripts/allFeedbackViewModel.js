@@ -9,7 +9,7 @@
 			app.utils.showBusyIndicator(true);
 			var options = {
 				page: 1,
-				pageSize: 50
+				pageSize: 200
 			};
 			feedback.getFeedbackList(options, function(data) {
 				for (var idx = 0; idx < data.length; idx++) {

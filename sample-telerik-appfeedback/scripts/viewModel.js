@@ -123,9 +123,14 @@
 
 		this.cancelFeedback = function () {
 			var self = app.viewModel;
-			self.drawImageOnCanvas($('#screenshotCanvas'), self.imageData);
-			self.clearFeedbackText();
-			$('#modal-view').data('kendoMobileModalView').close();
+            var $canvas = $('#screenshotCanvas');
+			self.drawImageOnCanvas($canvas, self.originalImageData, function(){
+                for(var idx = 0; idx < self.points.length; idx++){
+                    self.drawPointOnCanvas($canvas, self.points[idx]);
+                }
+    			self.clearFeedbackText();
+    			$('#modal-view').data('kendoMobileModalView').close();
+            });
 		};
 
 		this.onSendFeedbackViewShown = function () {
