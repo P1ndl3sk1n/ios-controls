@@ -180,7 +180,10 @@
 									app.utils.showBusyIndicator(false);
                                     app.application.navigate('#/');
 								}
-							}, app.utils.errorCallback);
+							}, function(error) {
+                                callbacksFinished++;
+                                app.utils.errorCallback(error);
+                            });
 
 						$('#send-all-view').data('kendoMobileModalView').close();
 					});
