@@ -89,6 +89,9 @@
 
 			app.viewModel.drawPointOnCanvas($screenshotCanvas, app.viewModel.lastPoint);
 			$('#modal-view').data('kendoMobileModalView').open();
+            setTimeout(function () {
+                $('#feedback-textarea').focus();
+            }, 20);
 		};
 
 		this.drawPointOnCanvas = function (canvas, point) {
@@ -147,6 +150,9 @@
 			var self = app.viewModel;
 			if (self.points && self.points.length > 0) {
 				$('#send-all-view').data('kendoMobileModalView').open();
+                setTimeout(function () {
+                	$('#FeedbackFrom').focus();
+            	}, 20);
 			} else {
 				app.utils.errorCallback('Tap on screenshot to leave feedback!');
 			}
