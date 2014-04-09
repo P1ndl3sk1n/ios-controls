@@ -122,7 +122,7 @@
 
         <div id="modal-view" data-role="modalview" data-model="app.viewModel" style="width: 300px; height: 300px">
             <div class="send-feedback-form">
-				<textarea data-bind="value: feedbackText" placeholder="Tell us what you think"></textarea>
+				<textarea id="feedback-textarea" rows="12" data-bind="value: feedbackText" placeholder="Tell us what you think"></textarea>
                 <div style="maring-top: 10px;">
                     <a data-click="app.viewModel.saveFeedback" data-role="button">Save</a>
                     <a data-role="button" data-align="right" data-click="app.viewModel.cancelFeedback">Cancel</a>
