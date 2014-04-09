@@ -184,7 +184,7 @@
 								if (callbacksFinished === self.points.length) {
 									app.utils.showSuccess('Feedback sent. Thank you!');
 									app.utils.showBusyIndicator(false);
-                                    app.application.navigate('#/');
+                                    self.navigateToRoot();
 								}
 							}, function(error) {
                                 callbacksFinished++;
@@ -200,6 +200,19 @@
 		this.cancelSendFeedbackItems = function () {
 			$('#send-all-view').data('kendoMobileModalView').close();
 		};
+        
+        this.navigateToRoot = function (e) {
+            var self = app.viewModel,
+            	$canvas = $('#screenshotCanvas');
+            
+			self.set('lastPoint', null);
+            self.set('points', []);
+            $canvas [0].getContext("2d").clearRect(0, 0, $canvas .width(), $canvas .height());
+
+            if (!e) {
+            	app.application.navigate('#/');
+            }
+        };
 
 		this.details = app.detailsViewModel;
 	}
