@@ -25,8 +25,13 @@
             .find('span')
             .html((error.message || error).toString().replace('Bad Request: ', ''));
 			app.utils.showBusyIndicator(false);
+        },
+        
+        showSuccess: function(message) {
+            $('#Notification').find('span').html(message);
+			$('#Notification').addClass('ok').fadeIn('2000').delay('4000').fadeOut('2000');
         }
-	}
+	};
 	
 	document.addEventListener('deviceready', function () {
         if(feedback && location.host.indexOf('icenium.com') > -1) {

@@ -31,21 +31,6 @@
 			return kendo.toString(length, 'n1') + suffix;
 		};
 
-		this.submitFeedback = function (ev) {
-			var self = app.viewModel;
-			app.utils.showBusyIndicator(true);
-			feedback.postFeedback({
-				systemInfo: self.systemInfo,
-				text: self.feedbackText,
-				imageData: self.imageData.replace('data:image/png;base64,', ''),
-				uid: self.UID
-			}, function (data) {
-				app.utils.showBusyIndicator(false);
-				$('#Notification').find('span').html('Feedback sent. Thank you!');
-				$('#Notification').addClass('ok').fadeIn('2000').delay('4000').fadeOut('2000');
-			}, app.utils.errorCallback);
-		};
-
 		this.goToSendFeedbackView = function (ev) {
 			var self = app.viewModel;
 			self.set('feedbackText', '');
@@ -123,14 +108,14 @@
 
 		this.cancelFeedback = function () {
 			var self = app.viewModel;
-            var $canvas = $('#screenshotCanvas');
-			self.drawImageOnCanvas($canvas, self.originalImageData, function(){
-                for(var idx = 0; idx < self.points.length; idx++){
-                    self.drawPointOnCanvas($canvas, self.points[idx]);
-                }
-    			self.clearFeedbackText();
-    			$('#modal-view').data('kendoMobileModalView').close();
-            });
+			var $canvas = $('#screenshotCanvas');
+			self.drawImageOnCanvas($canvas, self.originalImageData, function () {
+				for (var idx = 0; idx < self.points.length; idx++) {
+					self.drawPointOnCanvas($canvas, self.points[idx]);
+				}
+				self.clearFeedbackText();
+				$('#modal-view').data('kendoMobileModalView').close();
+			});
 		};
 
 		this.onSendFeedbackViewShown = function () {
@@ -152,7 +137,6 @@
 					text: self.feedbackText
 				});
 
-				self.lastPoint.text = self.feedbackText;
 				self.clearFeedbackText();
 				$('#modal-view').data('kendoMobileModalView').close();
 				//hide error message if shown
@@ -160,39 +144,47 @@
 		};
 
 		this.sendFeedbackItems = function () {
-			$('#send-all-view').data('kendoMobileModalView').open();
+			var self = app.viewModel;
+			if (self.points && self.points.length > 0) {
+				$('#send-all-view').data('kendoMobileModalView').open();
+			} else {
+				app.utils.errorCallback('Tap on screenshot to leave feedback!');
+			}
 		};
 
 		this.doneSendFeedbackItems = function () {
 			var self = app.viewModel,
 				canvas = $('<canvas></canvas>'),
-				item = {};
+				item = {},
+				callbacksFinished = 0;
 
 			if (self.points && self.points.length > 0) {
 				app.utils.showBusyIndicator(true);
-				self.drawImageOnCanvas(canvas, self.originalImageData, function () {
-					self.drawPointOnCanvas(canvas, self.lastPoint);
-					img = canvas[0].toDataURL('data:image/png');
+				self.points.forEach(function (point) {
+					self.drawImageOnCanvas(canvas, self.originalImageData, function () {
+						self.drawPointOnCanvas(canvas, point);
+						img = canvas[0].toDataURL('data:image/png');
 
-					item = {
-						systemInfo: self.systemInfo,
-						text: self.lastPoint.text,
-						imageData: img.replace('data:image/png;base64,', ''),
-						uid: self.UID
-					};
+						item = {
+							systemInfo: self.systemInfo,
+							text: point.text,
+							imageData: img.replace('data:image/png;base64,', ''),
+							uid: self.UID
+						};
 
-					feedback.postFeedback(item,
-						function (data) {
-							app.utils.showBusyIndicator(false);
-							$('#Notification').find('span').html('Feedback sent. Thank you!');
-							$('#Notification').addClass('ok').fadeIn('2000').delay('4000').fadeOut('2000');
-							app.application.navigate('#/');
-						}, app.utils.errorCallback);
+						feedback.postFeedback(item,
+							function (data) {
+								callbacksFinished++;
+								if (callbacksFinished === self.points.length) {
+									app.utils.showSuccess('Feedback sent. Thank you!');
+									app.utils.showBusyIndicator(false);
+                                    app.application.navigate('#/');
+								}
+							}, app.utils.errorCallback);
 
-					$('#send-all-view').data('kendoMobileModalView').close();
+						$('#send-all-view').data('kendoMobileModalView').close();
+					});
 				});
-			} else {
-				app.application.navigate('#/');
 			}
 		};
 
