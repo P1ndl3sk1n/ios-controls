@@ -56,22 +56,6 @@
         }
 
 		feedback.initialize(APPFEEDBACK_API_KEY);
-
-		var flickrAPI = 'http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?';
-		app.utils.showBusyIndicator(true);
-		$.getJSON(flickrAPI, {
-					  tags: 'kittens',
-					  tagmode: 'any',
-					  format: 'json'
-				  }).done(function(data) {
-					  app.utils.showBusyIndicator(false);
-					  $.each(data.items, function(i, item) {
-						  $('<img />').attr('src', item.media.m).appendTo('#images');
-						  if (i === 10) {
-							  return false;
-						  }
-					  });
-				  });
         
         $.shake({
     				shakethreshold: 3,
