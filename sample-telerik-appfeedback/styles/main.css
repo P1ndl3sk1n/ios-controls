@@ -277,3 +277,28 @@ a {
 .send-feedback-form .user-name label {
   display: none;
 }
+.home section {
+    margin: 0 1rem;
+}
+.home section .property {
+    margin-bottom: 1rem;
+}
+.home section .label {
+    font-size: .8rem;
+    font-weight: bold;
+    margin-bottom: .1rem;
+}
+.home section .value {
+    font-size: 1.6rem;
+}
+.home section .status {
+    font-size: .9rem;
+    font-weight: bold;
+    display: inline-block;
+}
+.home section .status.ok {
+    color: #27ae61;
+}
+.home section .status.danger {
+    color: #c24034;
+}

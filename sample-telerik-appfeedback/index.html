@@ -31,13 +31,65 @@
 		<div id="Notification"><i class="icon-remove"></i><span></span></div>
 		<div id="Overlay" style="display: none;"></div>
 		<div id="Loading" style="display: none;"></div>
-		<div id="home-view" data-role="view" data-title="LOL Cats" data-model="app.viewModel">
-			<div id="Content">
-				<div class="content-body">
-					<div id="images" style="padding: 0 20px;"></div>
-				</div>
-			</div>
-		</div>
+		<div id="home-view" data-role="view" data-title="My Car" data-model="app.viewModel">
+            <div id="Content">
+                <div class="content-body home">
+                    
+                    <h2>Fuel</h2>
+                    
+                    <section>
+                    
+                        <div class="property">
+                            <div class="label">Last fueling:</div>
+                            <div class="value">21 Dec, 2013 12:34PM</div>
+                        </div>                    
+                        
+                        <div class="property">
+                            <div class="label">Fule added / tank capacity:</div>
+                            <div class="value">23 / 20 galons 
+                                <div class="status ok">115% full</div>
+                            </div>
+                        </div>         
+                        
+                        <div class="property">
+                            <div class="label">Avg. MPG:</div>
+                            <div class="value">
+                                33.0 
+                                <div class="status danger">+3.3</div>                                
+                            </div>
+                        </div>
+                    
+                    </section>
+                    
+                    
+                    <h2>Upcomming</h2>
+                    
+                    <section>
+                    
+                        <div class="property">
+                            <div class="label">Change oil after:</div>
+                            <div class="value">15k miles</div>
+                        </div>                    
+                        
+                        <div class="property">
+                            <div class="label">Change tire afters:</div>
+                            <div class="value">30k miles</div>
+                        </div>         
+                        
+                        <div class="property">
+                            <div class="label">Avg. MPG:</div>
+                            <div class="value">
+                                33.0 
+                                
+                            </div>
+                        </div>
+                    
+                    </section>
+                    <div id="images" style="padding: 0 20px; display: none;"></div>
+                    
+                </div>
+            </div>
+        </div>
 
 		<div id="Navigation" data-role="drawer" data-views="['home-view',  'all-feedback-view']">
 			<ul class="top">
