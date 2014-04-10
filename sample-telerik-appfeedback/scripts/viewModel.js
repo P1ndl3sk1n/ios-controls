@@ -73,8 +73,8 @@
 
 		this.onScreenshotTap = function (ev) {
 			var $screenshotCanvas = $('#screenshotCanvas');
-			var screenX = ev.touch.x.screen;
-			var screenY = ev.touch.y.screen;
+			var screenX = ev.touch.x.location;
+			var screenY = ev.touch.y.location;
 
 			var canvasXOffset = $screenshotCanvas.offset().left;
 			var canvasYOffset = $screenshotCanvas.offset().top;
