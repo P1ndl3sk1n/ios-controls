@@ -41,7 +41,7 @@
                                 
             feedback.getSystemInfo = function(successCallback, errorCallback) {
                 successCallback({
-                    model : 'Mist Simulator',
+                    model : 'In-Browser Simulator',
                     appVersion : '-',
                     cordova : '-',
                     appId : '-',
