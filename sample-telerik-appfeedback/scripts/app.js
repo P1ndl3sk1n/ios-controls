@@ -9,7 +9,7 @@
 				overlay.show();
 			}
 			else {
-				overlay.hide();
+				overlay.hide(100);
 			}
 		},
         
@@ -73,14 +73,18 @@
 					  });
 				  });
         
-		function shakeEventDidOccur () {
-			app.utils.showBusyIndicator(true);
-			setTimeout(function() {
-                app.utils.showBusyIndicator(false);
-				app.application.navigate('send-feedback-view');
-			}, 1500);
-		}
-		window.addEventListener('shake', shakeEventDidOccur, false);
+        $.shake({
+    				shakethreshold: 3,
+                    callback: function() {
+                        app.utils.showBusyIndicator(true);
+                        setTimeout(function() {
+                            app.utils.showBusyIndicator(false);
+                            setTimeout(function() {
+								app.viewModel.goToSendFeedbackView();
+                            }, 150);
+                        }, 1000);
+                    }
+                });
 	}, false);
 
 	app.application = new kendo.mobile.Application(document.body, { layout: 'main-layout'});
