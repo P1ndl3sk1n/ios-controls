@@ -94,7 +94,6 @@ a {
 .image-editor {
   clear: both;
   position: relative;
-  margin: 20px 0 0 0;
   overflow: hidden;
   padding: 5px 0;
 }
@@ -129,6 +128,11 @@ a {
 .image-editor .image-wrapper {
   background: #333;
   padding: 0 10px 20px;
+}
+.image-editor .image-wrapper .hint {
+    background: #333; 
+    color: #fff;
+    padding: .6rem 0;
 }
 .image-editor .image-wrapper img {
   max-width: 100%;

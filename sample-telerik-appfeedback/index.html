@@ -113,13 +113,14 @@
 			 data-title="Send Feedback"
              data-show="app.viewModel.onSendFeedbackViewShown">
 			<div class="send-feedback-form">
-                <h1>Tap to leave feedback</h1>
 				<div class="image-editor">
 					<p>
 						Screenshot (<span data-bind="text: imageSize"></span>):
 					</p>
-
-                    <canvas id="screenshotCanvas" data-role="touch" data-tap="app.viewModel.onScreenshotTap"></canvas>
+					<div class="image-wrapper">
+                        <div class="hint">Hint: Tap anywhere to leave comments</div>
+                    	<canvas id="screenshotCanvas" data-role="touch" data-tap="app.viewModel.onScreenshotTap"></canvas>
+                    </div>
 				</div>
 			</div>
 		</div>
