@@ -14,6 +14,16 @@
 		},
         
         errorCallback: function(error, closeHandler) {
+            var message = '';
+            
+            if (error.errors && error.errors.length > 0) {
+                error.errors.forEach(function (err) {
+                    message += err + '\r\n';
+                });
+            } else {
+                message = error.message;
+            }            
+            
             $('#Notification').addClass('error').fadeIn('2000', function() {
                 $(this).find('i').on('click', function() {
                   $('#Notification').removeClass('error').hide();
@@ -23,7 +33,7 @@
                 });
             })
             .find('span')
-            .html((error.message || error).toString().replace('Bad Request: ', ''));
+            .html((message || error).toString().replace('Bad Request:', ' '));
 			app.utils.showBusyIndicator(false);
         },
         

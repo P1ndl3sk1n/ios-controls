@@ -132,7 +132,7 @@
 			var self = app.viewModel;
 
 			if (self.feedbackText.trim().length === 0) {
-				app.utils.errorCallback('Text cannot be empty.');
+				app.utils.errorCallback('Text cannot be empty');
 			} else {
 				self.points.push({
 					x: self.lastPoint.x,

@@ -73,7 +73,7 @@
 			app.utils.showBusyIndicator(true);
 			feedback.postReply(self.get('currentThread.Id'), replyObj, function(data) {
 				self.loadData();
-			}, app.viewModel.errorCallback);
+			}, app.utils.errorCallback);
 		};
 	}
 	
