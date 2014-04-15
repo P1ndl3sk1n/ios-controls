@@ -69,6 +69,11 @@
 				uid: self.UID
 			};
 
+			if (!self.feedbackText || self.feedbackText.trim().length === 0) {
+				app.utils.errorCallback('Text cannot be empty');
+				return;
+			} 
+			
 			self.set('feedbackText', '');
 			app.utils.showBusyIndicator(true);
 			feedback.postReply(self.get('currentThread.Id'), replyObj, function(data) {
