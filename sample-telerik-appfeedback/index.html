@@ -13,7 +13,6 @@
 		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="touch-icons/apple-touch-icon-72x72.png">
 		<link rel="apple-touch-icon-precomposed" sizes="57x57" href="touch-icons/apple-touch-icon-57x57.png">
 		<link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-		<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,300,700,800" rel="stylesheet" type="text/css">
 		<link href="styles/main.css" rel="stylesheet" type="text/css">
 
 		<script src="cordova.js"></script>
@@ -112,16 +111,14 @@
 			 data-model="app.viewModel"
 			 data-title="Send Feedback"
              data-show="app.viewModel.onSendFeedbackViewShown">
-			<div class="send-feedback-form">
-				<div class="image-editor">
-					<p>
-						Screenshot (<span data-bind="text: imageSize"></span>):
-					</p>
-					<div class="image-wrapper">
-                        <div class="hint">Hint: Tap anywhere to leave comments</div>
-                    	<canvas id="screenshotCanvas" data-role="touch" data-tap="app.viewModel.onScreenshotTap"></canvas>
-                    </div>
-				</div>
+			<div class="image-editor">
+				<p>
+					Screenshot (<span data-bind="text: imageSize"></span>):
+				</p>
+				<div class="image-wrapper">
+                    <div class="hint">Hint: Tap anywhere to leave comments</div>
+                	<canvas id="screenshotCanvas" data-role="touch" data-tap="app.viewModel.onScreenshotTap"></canvas>
+                </div>
 			</div>
 		</div>
 
@@ -173,22 +170,22 @@
 			</div>
 		</div>
 
-        <div id="modal-view" data-role="modalview" data-model="app.viewModel" style="width: 300px; height: 300px">
+        <div id="modal-view" data-role="modalview" data-model="app.viewModel" style="width: 300px; ">
             <div class="send-feedback-form">
 				<textarea id="feedback-textarea" rows="12" data-bind="value: feedbackText" placeholder="Tell us what you think"></textarea>
-                <div style="maring-top: 10px;">
+                <div style="margin: 10px 0 0;">
                     <a data-click="app.viewModel.saveFeedback" data-role="button">Save</a>
                     <a data-role="button" data-align="right" data-click="app.viewModel.cancelFeedback">Cancel</a>
             	</div>
             </div>
         </div>
         
-		<div id="send-all-view" data-role="modalview" data-model="app.viewModel" style="width: 300px; height: 100px">
+		<div id="send-all-view" data-role="modalview" data-model="app.viewModel" style="width: 300px;">
             <div class="send-feedback-form">
 				<div class="user-name">
 					<input id="FeedbackFrom" type="text" placeholder="Your name" data-bind="value: UID">
 				</div>
-                <div style="margin-top: 10px;">
+                <div style="margin: 10px 0 0;">
                     <a data-role="button" data-click="app.viewModel.doneSendFeedbackItems">Done</a>
                 	<a data-role="button" data-click="app.viewModel.cancelSendFeedbackItems">Cancel</a>                	
                 </div>
