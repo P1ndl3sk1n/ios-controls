@@ -99,6 +99,7 @@
 
 		this.drawPointOnCanvas = function (canvas, point) {
 			var context = canvas[0].getContext('2d');
+			context.save();
 			context.scale(window.devicePixelRatio, window.devicePixelRatio);
 
 			context.strokeStyle = 'red';
@@ -111,6 +112,7 @@
 			context.arc(point.x, point.y, 6, 0, Math.PI * 2);
 			context.fillStyle = 'white';
 			context.fill();
+			context.restore();
 		};
 
 		this.cancelFeedback = function () {
