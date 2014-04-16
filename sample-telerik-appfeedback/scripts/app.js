@@ -65,8 +65,13 @@
 			};
         }
 
-		feedback.initialize(APPFEEDBACK_API_KEY);
-        
+		try {
+			feedback.initialize(APPFEEDBACK_API_KEY);
+        }
+		catch(err) {
+			app.utils.errorCallback(err);
+        }
+
         $.shake({
     				shakethreshold: 3,
                     callback: function() {
