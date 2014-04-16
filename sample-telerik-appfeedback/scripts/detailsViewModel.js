@@ -13,7 +13,7 @@
 			feedback.getFeedback(self.get('currentThread.Id'), function(data) {
                 app.utils.showBusyIndicator(false);
 				self.set('feedbackComments', data.slice(1));
-				self.set('UID', self.get('currentThread.Uid'));
+				self.set('UID', app.viewModel.get('lastSubmittedUID'));
 
                 var $screenshot = $('.feedback-screenshot');
                 $screenshot.off('click');
@@ -46,7 +46,7 @@
 			var self = app.viewModel.get('details');
 			var currentThread = self.get('currentThread');
 			if (currentThread) {
-				return currentThread.Author || currentThread.Uid;
+				return currentThread.Author || currentThread.Uid || 'Anonymous';
 			}
 
 			return 'Anonymous';
@@ -77,6 +77,7 @@
 			self.set('feedbackText', '');
 			app.utils.showBusyIndicator(true);
 			feedback.postReply(self.get('currentThread.Id'), replyObj, function(data) {
+				app.viewModel.set('lastSubmittedUID', self.UID);
 				self.loadData();
 			}, app.utils.errorCallback);
 		};

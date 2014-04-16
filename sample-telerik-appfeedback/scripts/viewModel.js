@@ -9,6 +9,7 @@
 		this.screenshotSize = {};
 		this.points = [];
 		this.originalImageData = '';
+		this.lastSubmittedUID = '';
 
 		this.clearFeedbackText = function () {
 			var self = app.viewModel;
@@ -34,6 +35,9 @@
 		this.goToSendFeedbackView = function (ev) {
 			var self = app.viewModel;
 			self.set('feedbackText', '');
+			
+			// set this in case user has submitted replies on details view
+			self.set('UID', self.lastSubmittedUID);
 
 			feedback.getScreenshot(function (base64Image) {
 				feedback.getSystemInfo(function (systemInfo) {
@@ -182,6 +186,8 @@
 							function (data) {
 								callbacksFinished++;
 								if (callbacksFinished === self.points.length) {
+									// set lastSubmittedUID so other screens (details view, etc.) can know the last used uid
+									self.set('lastSubmittedUID', self.UID);
 									app.utils.showSuccess('Feedback sent. Thank you!');
 									app.utils.showBusyIndicator(false);
                                     self.navigateToRoot();
