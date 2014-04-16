@@ -56,16 +56,15 @@
 
 			var img = new Image();
 			img.onload = function () {
-				var desiredWidth = Math.round($('html').width() - 2 * $origCanvas.offset().left);
+				canvas.width = img.naturalWidth;
+				canvas.height = img.naturalHeight;
 
-				canvas.width = desiredWidth;
-				canvas.height = Math.round(img.naturalHeight * (desiredWidth / img.naturalWidth));
-
-				context.webkitImageSmoothingEnabled = false;
-				context.mozImageSmoothingEnabled = false;
-				context.imageSmoothingEnabled = false; /// future
-
-				context.drawImage(img, 0, 0, canvas.width, canvas.height);
+				if(window.devicePixelRatio) {
+					$canvas.css('width', canvas.width / window.devicePixelRatio);
+					$canvas.css('height', canvas.height / window.devicePixelRatio);
+				}
+				
+				context.drawImage(img, 0, 0);
 
 				if (done && $.isFunction(done)) {
 					done();
@@ -100,6 +99,7 @@
 
 		this.drawPointOnCanvas = function (canvas, point) {
 			var context = canvas[0].getContext('2d');
+			context.scale(window.devicePixelRatio, window.devicePixelRatio);
 
 			context.strokeStyle = 'red';
 			context.fillStyle = 'red';
