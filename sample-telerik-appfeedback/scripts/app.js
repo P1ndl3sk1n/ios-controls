@@ -24,7 +24,7 @@
                 message = error.message;
             }            
             
-            $('#Notification').addClass('error').fadeIn('2000', function() {
+            $('#Notification').removeClass('ok').addClass('error').fadeIn('2000', function() {
                 $(this).find('i').on('click', function() {
                   $('#Notification').removeClass('error').hide();
                     if(closeHandler) {
@@ -39,7 +39,7 @@
         
         showSuccess: function(message) {
             $('#Notification').find('span').html(message);
-			$('#Notification').addClass('ok').fadeIn('2000').delay('4000').fadeOut('2000');
+			$('#Notification').removeClass('error').addClass('ok').fadeIn('2000').delay('4000').fadeOut('2000');
         }
 	};
 	
