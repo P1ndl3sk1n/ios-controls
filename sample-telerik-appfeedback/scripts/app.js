@@ -25,7 +25,9 @@
             }            
             
             $('#Notification').removeClass('ok').addClass('error').fadeIn('2000', function() {
-                $(this).find('i').on('click', function() {
+				var $button = $(this).find('i');
+				$button.off('click');
+                $button.on('click', function() {
                   $('#Notification').removeClass('error').hide();
                     if(closeHandler) {
                         closeHandler();
