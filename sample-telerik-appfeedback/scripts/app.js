@@ -16,7 +16,9 @@
         errorCallback: function(error, closeHandler) {
             var message = '';
             
-            if (error.errors && error.errors.length > 0) {
+			if(typeof(error) === 'number' && error === 0){
+				message = 'Something went wrong. Make sure you have an Internet connection.';
+            } else if (error.errors && error.errors.length > 0) {
                 error.errors.forEach(function (err) {
                     message += err + '\r\n';
                 });
