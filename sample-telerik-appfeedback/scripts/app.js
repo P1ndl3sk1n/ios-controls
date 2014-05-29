@@ -10,7 +10,8 @@
 			feedback.initialize(APPFEEDBACK_API_KEY);
         }
 		catch(err) {
-			app.utils.errorCallback(err);
+			console.log('Something went wrong:');
+			console.log(err);
         }
 	}, false);
 
