@@ -33,60 +33,98 @@
 		<div id="home-view" data-role="view" data-title="My Car" data-model="app.viewModel">
             <div id="Content">
                 <div class="content-body home">
-                    
-                    <h2>Fuel</h2>
-                    
+
+
                     <section>
-                    
-                        <div class="property">
-                            <div class="label">Last fueling:</div>
-                            <div class="value">21 Dec, 2013 12:34PM</div>
-                        </div>                    
-                        
-                        <div class="property">
-                            <div class="label">Fule added / tank capacity:</div>
-                            <div class="value">23 / 20 galons 
-                                <div class="status ok">115% full</div>
-                            </div>
-                        </div>         
-                        
-                        <div class="property">
-                            <div class="label">Avg. MPG:</div>
-                            <div class="value">
-                                33.0 
-                                <div class="status danger">+3.3</div>                                
-                            </div>
+
+                      <h3>Honda Accord</h3>
+
+                        <div class="car-info">
+
+                            <table>
+                                <tr>
+                                    <th>Make</th>
+                                    <td>Honda</td>
+                                </tr>
+                                <tr>
+                                    <th>Model</th>
+                                    <td>Accord LX</td>
+                                </tr>
+                                <tr>
+                                    <th>Year</th>
+                                    <td>2013</td>
+                                </tr>
+                            </table>
+
+                            <table>
+                                <tr>
+                                    <th>Car Type</th>
+                                    <td>Sedan</td>
+                                </tr>
+                                <tr>
+                                    <th>Engine</th>
+                                    <td>2.4 L, 4 cyl</td>
+                                </tr>
+                                <tr>
+                                    <th>Fuel Tank</th>
+                                    <td>17.2 gal.</td>
+                                </tr>
+                            </table>
+
                         </div>
                     
                     </section>
-                    
-                    
-                    <h2>Upcomming</h2>
-                    
+
                     <section>
-                    
+                                
+                    <h2>Fuelings</h2>
+
+                      <div class="property">
+                          <div class="label">Last fueling:</div>
+                          <div class="value">21 December</div>
+                      </div>                    
+                      
+                      <div class="property">
+                          <div class="label">Fule added / tank capacity:</div>
+                          <div class="value">23 / 17.2 galons 
+                              <div class="status ok">143% full</div>
+                          </div>
+                      </div>         
+                      
+                      <div class="property">
+                          <div class="label">Avg. MPG:</div>
+                          <div class="value">
+                              33.0 
+                              <div class="status danger">+3.3</div>                                
+                          </div>
+                      </div>
+
+                    </section>
+
+
+                    <section>
+
+                        <h2>Upcoming Service</h2>
+
                         <div class="property">
                             <div class="label">Change oil after:</div>
                             <div class="value">15k miles</div>
-                        </div>                    
-                        
+                        </div>
+
                         <div class="property">
                             <div class="label">Change tire afters:</div>
                             <div class="value">30k miles</div>
-                        </div>         
-                        
+                        </div>
+
                         <div class="property">
                             <div class="label">Avg. MPG:</div>
                             <div class="value">
-                                33.0 
-                                
+                                33.0
                             </div>
                         </div>
-                    
+
                     </section>
-                    <div id="images" style="padding: 0 20px; display: none;"></div>
-                    
-                </div>
+                  </div>        
             </div>
         </div>
 
@@ -195,10 +233,7 @@
 		<!--Layout-->
 		<div data-role="layout" data-id="main-layout">
 			<div data-role="header">
-				<header class="bar-title" data-role="navbar">
-					<a class="button navigation-toggle" href="#Navigation" data-role="button" data-rel="drawer" data-align="left">
-						<i class="icon-reorder"></i>
-					</a>
+				<header class="bar-title" data-role="navbar" style="background-color: #014778; color: #fff;">
 					<span data-role="view-title"></span>
 					<a class="send-button"
 					   data-align="right" 

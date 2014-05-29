@@ -76,19 +76,7 @@
 			app.utils.errorCallback(err);
         }
 
-        $.shake({
-    				shakethreshold: 3,
-                    callback: function() {
-                        app.utils.showBusyIndicator(true);
-                        setTimeout(function() {
-                            app.utils.showBusyIndicator(false);
-                            setTimeout(function() {
-								app.viewModel.goToSendFeedbackView();
-                            }, 150);
-                        }, 1000);
-                    }
-                });
 	}, false);
 
-	app.application = new kendo.mobile.Application(document.body, { layout: 'main-layout'});
+	app.application = new kendo.mobile.Application(document.body, { layout: 'main-layout',  skin: "flat", statusBarStyle: "black-translucent" });
 })(window);
