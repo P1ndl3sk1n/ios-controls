@@ -1,8 +1,6 @@
 sample-telerik-appfeedback
 ==========================
 
-This application is part of a private beta release. If you want to get access, please contact [Telerik Support](mailto:support@telerik.com).
-
 ### Requirements
 - Registration in [Telerik Platform](http://www.telerik.com/platform)
 - [Telerik AppBuilder](http://www.telerik.com/appbuilder).
