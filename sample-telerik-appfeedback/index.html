@@ -18,248 +18,115 @@
 		<script src="cordova.js"></script>
 		<script src="kendo/js/jquery.min.js"></script>
 		<script src="kendo/js/kendo.mobile.min.js"></script>
-		<script src="scripts/jQuery.ios-shake.js"></script>
-		<script src="scripts/sketch.js"></script>
 		<script src="scripts/moment.min.js"></script>
-		<script src="scripts/detailsViewModel.js"></script>
-		<script src="scripts/allFeedbackViewModel.js"></script>
-		<script src="scripts/viewModel.js"></script>
 		<script src="scripts/app.js"></script>
 	</head>
 	<body>
-		<div id="Notification"><i class="icon-remove"></i><span></span></div>
-		<div id="Overlay" style="display: none;"></div>
-		<div id="Loading" style="display: none;"></div>
-		<div id="home-view" data-role="view" data-title="My Car" data-model="app.viewModel">
+		<div id="home-view" data-role="view" data-title="My Car">
             <div id="Content">
                 <div class="content-body home">
-                    
-                    <h2>Fuel</h2>
-                    
+
+
                     <section>
-                    
-                        <div class="property">
-                            <div class="label">Last fueling:</div>
-                            <div class="value">21 Dec, 2013 12:34PM</div>
-                        </div>                    
-                        
-                        <div class="property">
-                            <div class="label">Fule added / tank capacity:</div>
-                            <div class="value">23 / 20 galons 
-                                <div class="status ok">115% full</div>
-                            </div>
-                        </div>         
-                        
-                        <div class="property">
-                            <div class="label">Avg. MPG:</div>
-                            <div class="value">
-                                33.0 
-                                <div class="status danger">+3.3</div>                                
-                            </div>
+
+                      <h3>Honda Accord</h3>
+
+                        <div class="car-info">
+
+                            <table>
+                                <tr>
+                                    <th>Make</th>
+                                    <td>Honda</td>
+                                </tr>
+                                <tr>
+                                    <th>Model</th>
+                                    <td>Accord LX</td>
+                                </tr>
+                                <tr>
+                                    <th>Year</th>
+                                    <td>2013</td>
+                                </tr>
+                            </table>
+
+                            <table>
+                                <tr>
+                                    <th>Car Type</th>
+                                    <td>Sedan</td>
+                                </tr>
+                                <tr>
+                                    <th>Engine</th>
+                                    <td>2.4 L, 4 cyl</td>
+                                </tr>
+                                <tr>
+                                    <th>Fuel Tank</th>
+                                    <td>17.2 gal.</td>
+                                </tr>
+                            </table>
+
                         </div>
                     
                     </section>
-                    
-                    
-                    <h2>Upcomming</h2>
-                    
+
                     <section>
-                    
+                                
+                    <h2>Fuelings</h2>
+
+                      <div class="property">
+                          <div class="label">Last fueling:</div>
+                          <div class="value">21 December</div>
+                      </div>                    
+                      
+                      <div class="property">
+                          <div class="label">Fule added / tank capacity:</div>
+                          <div class="value">23 / 17.2 galons 
+                              <div class="status ok">143% full</div>
+                          </div>
+                      </div>         
+                      
+                      <div class="property">
+                          <div class="label">Avg. MPG:</div>
+                          <div class="value">
+                              33.0 
+                              <div class="status danger">+3.3</div>                                
+                          </div>
+                      </div>
+
+                    </section>
+
+
+                    <section>
+
+                        <h2>Upcoming Service</h2>
+
                         <div class="property">
                             <div class="label">Change oil after:</div>
                             <div class="value">15k miles</div>
-                        </div>                    
-                        
+                        </div>
+
                         <div class="property">
                             <div class="label">Change tire afters:</div>
                             <div class="value">30k miles</div>
-                        </div>         
-                        
+                        </div>
+
                         <div class="property">
                             <div class="label">Avg. MPG:</div>
                             <div class="value">
-                                33.0 
-                                
+                                33.0
                             </div>
                         </div>
-                    
+
                     </section>
-                    <div id="images" style="padding: 0 20px; display: none;"></div>
-                    
-                </div>
+                  </div>        
             </div>
         </div>
 
-		<div id="Navigation" data-role="drawer" data-views="['home-view',  'all-feedback-view']">
-			<ul class="top">
-				<li>
-					<a href="#home-view">
-						<i class="icon-home"></i> Home
-					</a>
-				</li>
-				<li>
-					<a href="#all-feedback-view">
-						<i class="icon-list"></i> All Feedback
-					</a>
-				</li>
-			</ul>
-		</div>
-
-		<div id="send-feedback-view" 
-			 data-role="view" 
-			 data-layout="send-feedback-layout" 
-			 data-model="app.viewModel"
-			 data-title="Send Feedback"
-             data-show="app.viewModel.onSendFeedbackViewShown">
-			<div class="image-editor">
-				<p>
-					Screenshot (<span data-bind="text: imageSize"></span>):
-				</p>
-				<div class="image-wrapper">
-                    <div class="hint">Hint: Tap anywhere to leave comments</div>
-                	<canvas id="screenshotCanvas" data-role="touch" data-tap="app.viewModel.onScreenshotTap"></canvas>
-                </div>
-			</div>
-		</div>
-
-		<div id="all-feedback-view" 
-			 data-show="app.allFeedbackViewModel.allFeedbackViewShown" 
-			 data-role="view" 
-			 data-title="All feedback" 
-			 data-model="app.allFeedbackViewModel" 
-			 data-layout="main-layout">
-			<ul id="allFeedbackListView">
-
-			</ul>
-		</div>
-
-		<div id="feedback-details-view" 
-			 data-role="view" 
-			 data-layout="feedback-details-layout" 
-			 data-title="Feedback"
-			 data-show="app.viewModel.details.detailsViewShown"
-			 data-model="app.viewModel.details">
-			<div class="feedback-screenshot" data-bind="visible: details.imageUrl">
-				<div class="screenshot-wrapper">
-					<img data-bind="{attr: {src: details.imageUrl}}">
-					<div class="zoom-button in">
-						<i class="icon-zoom-in"></i>
-					</div>
-					<div class="zoom-button out">
-						<i class="icon-zoom-out"></i>
-					</div>
-				</div>
-			</div>
-			<div class="feedback-description">
-				<p class="author" data-bind="text: author"></p>
-				<p class="text" data-bind="text: currentThread.Text"></p>
-				<p class="date" data-bind="text: createdAt"></p>
-			</div>
-			<div class="replies-listing">
-				<h2>Comments</h2>
-				<ul id="feedbackCommentsListView" data-role="listView" data-bind="source: feedbackComments" data-template="feedback-details-template">
-				</ul>
-			</div>
-			<div class="send-feedback-form">
-				<textarea placeholder="Your reply" data-bind="value: feedbackText"></textarea>
-				<input type="text" placeholder="Your name" data-bind="value: UID">
-
-				<a data-role="button" data-bind="click: postReply">
-					Add Reply
-				</a>
-			</div>
-		</div>
-
-        <div id="modal-view" data-role="modalview" data-model="app.viewModel" style="width: 300px; height: 140px">
-            <div class="send-feedback-form">
-				<textarea id="feedback-textarea" rows="12" data-bind="value: feedbackText" placeholder="Tell us what you think"></textarea>
-                <div style="margin: 10px 0 0;">
-                    <a data-click="app.viewModel.saveFeedback" data-role="button">Save</a>
-                    <a data-role="button" data-align="right" data-click="app.viewModel.cancelFeedback">Cancel</a>
-            	</div>
-            </div>
-        </div>
-        
-		<div id="send-all-view" data-role="modalview" data-model="app.viewModel" style="width: 300px; height: 100px">
-            <div class="send-feedback-form">
-				<div class="user-name">
-					<input id="FeedbackFrom" type="text" placeholder="Your name" data-bind="value: UID">
-				</div>
-                <div style="margin: 10px 0 0;">
-                    <a data-role="button" data-click="app.viewModel.doneSendFeedbackItems">Done</a>
-                	<a data-role="button" data-click="app.viewModel.cancelSendFeedbackItems">Cancel</a>                	
-                </div>
-            </div>
-        </div>
-        
 		<!--Layout-->
 		<div data-role="layout" data-id="main-layout">
 			<div data-role="header">
-				<header class="bar-title" data-role="navbar">
-					<a class="button navigation-toggle" href="#Navigation" data-role="button" data-rel="drawer" data-align="left">
-						<i class="icon-reorder"></i>
-					</a>
+				<header class="bar-title" data-role="navbar" style="background-color: #014778; color: #fff;">
 					<span data-role="view-title"></span>
-					<a class="send-button"
-					   data-align="right" 
-					   data-role="button"
-					   data-click="app.viewModel.goToSendFeedbackView">
-						<i class="icon-bullhorn"></i>
-					</a>
 				</header>
 			</div>
 		</div>
-
-		<div data-role="layout" data-id="send-feedback-layout">
-			<div data-role="header">
-				<div data-role="navbar">
-					<a data-role="backbutton" data-align="left" data-click="app.viewModel.navigateToRoot">Cancel</a>
-					<span data-role="view-title"></span>
-                    <a class="send-button" data-align="right" data-role="button" data-click="app.viewModel.sendFeedbackItems">Send</a>
-				</div>
-			</div>
-		</div>
-
-		<div data-role="layout" data-id="feedback-details-layout">
-			<div data-role="header">
-				<div data-role="navbar">
-					<a data-role="backbutton" data-align="left"></a>
-					<span data-role="view-title"></span>
-				</div>
-			</div>
-		</div>
-
-		<div data-role="layout" data-id="edit-screenshot-layout">
-			<div data-role="header">
-				<div data-role="navbar">
-					<a data-role="backbutton" data-align="left">Cancel</a>
-					<span data-role="view-title"></span>
-					<a data-role="button" data-align="right" data-click="app.viewModel.editScreenshot">Done</a>
-				</div>
-			</div>
-		</div>
-
-		<script type="text/x-kendo-template" id="all-feedback-template">
-			<a>
-				<div class="feedback-item">
-					<div class="date"># var createdAt = kendo.toString(new Date(data.CreatedAt), 'MMMM dd, yyyy h:mm tt'); #
-						${createdAt} </div>
-					<div class="author">${data.Author || data.Uid || 'Anonymous'}</div>
-					<div class="text">${Text || ''}</div>
-					<div class="replies">${CommentsCount -1} replies</div>
-				</div>
-			</a>
-		</script>
-
-		<script type="text/x-kendo-template" id="feedback-details-template">
-			<li>
-				<div class="text">${data.Text || ''}</div>
-				# var createdAt = kendo.toString(new Date(data.CreatedAt), 'MMMM dd, yyyy h:mm tt'); #
-				<div class="meta">
-					<span class="date">#= moment(data.ModifiedAt).fromNow() #</span>
-					<span class="author">${data.Author || data.Uid || 'Anonymous'} </span>
-				</div>
-			</li>
-		</script>
 	</body>
 </html>
