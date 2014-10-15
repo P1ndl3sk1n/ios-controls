@@ -1,6 +1,6 @@
 (function (global) {
 	var app = global.app = global.app || {};
-	var APPFEEDBACK_API_KEY = 'PLACE-YOUR-API-KEY-HERE';
+	var APPFEEDBACK_API_KEY = '58180300-f534-11e3-b31e-a520f3d91889';
 
 	app.utils = {
 	};
